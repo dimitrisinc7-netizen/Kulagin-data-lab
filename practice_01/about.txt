@@ -1,3 +1,3 @@
-Student: <Kulagin Dmytrogit>
+Student: Student: Kulagin Dmytro
 Course: Analytics & Data Engineer
 School: Data Lab
