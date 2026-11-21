@@ -6,7 +6,7 @@ select country_code,
        round(avg(total_amount), 2) as avg_check,
        min(total_amount) as min_check,
        max(total_amount) as max_check
-from orders
+from shop.orders
 where created_at between '2025-01-01' and '2026-01-01'
 group by country_code
 
@@ -16,7 +16,7 @@ select date_trunc('month', created_at)::date as order_month,
        count(distinct customer_id) as customers_cnt,
        sum(total_amount) as total_sum,
        round(avg(total_amount), 2) as avg_check
-from orders
+from shop.orders
 where country_code = 'UA'
 and status = 'received'
 group by date_trunc('month', created_at)
@@ -27,7 +27,7 @@ select country_code,
        extract(hour from created_at) as order_hour,
        count(order_id) as orders_cnt,
        round(avg(total_amount), 2) as avg_check
-from orders
+from shop.orders
 group by extract(hour from created_at), country_code
 order by country_code
 
@@ -37,7 +37,7 @@ select customer_id,
        sum(total_amount) as total_sum,
        min(created_at::date) as first_order_date, 
        max(created_at::date) as last_order_date
-from orders
+from shop.orders
 where country_code = 'UA'
 group by customer_id
 having count(order_id) >= 15

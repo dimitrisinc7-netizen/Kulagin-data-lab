@@ -7,7 +7,7 @@ select *, 'Заказа № ' || order_id as order_label, created_at::date as or
                when installments_count in (5,6) then 'середній' 
                else 'довгий'
               end as term_group
-from orders
+from shop.orders
 where country_code = 'UA'
 and created_at between '2025-12-25' and '2026-01-01'
 and installments_count > 1
@@ -23,7 +23,7 @@ select *, shipped_at::date as shipped_date, arrived_at::date - shipped_at::date 
           	else 'Не відправлено'
           	end as state,
           	coalesce (returned_at, received_at, arrived_at, shipped_at, created_at) as last_event_at
-from shipments 
+from shop.shipments 
 where created_at between '2025-12-25' and '2026-01-01'
 order by shipment_id
 
@@ -39,7 +39,7 @@ select *, first_name || ' ' || upper(last_name) as full_name,
 	      end as contact_type,
 	      extract(year from birth_date) as birth_year,
 	      updated_at::date - registered_at::date as days_registered 
-from customers
+from shop.customers
 where country_code = 'UA'
 and registered_at  between '2025-12-01' and '2026-01-01'
 and email ilike '%ukr.net' or email is null
