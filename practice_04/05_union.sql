@@ -1,4 +1,27 @@
 --Завдання 5.1. Стрічка подій замовлення
+select created_at as event_at,
+       'заказ створено' as event,
+       total_amount as amount
+from shop.orders 
+where order_id = 271060
+union all
+select created_at,
+       case status
+           when 'succeeded' then 'платіж успішний'
+           when 'failed'then 'платіж відхилено'
+       end,
+       amount
+from shop.payments
+where order_id = 271060 and status IN ('succeeded', 'failed')
+union all
+select received_at,
+       'отримано',
+       null
+from shop.shipments
+where order_id = 271060 and received_at is not null
+order by event_at
+
+--Завдання 5.2. Звірка сум за грудень 2025 року
 select o.country_code,
        'замовлення' as metric,
        sum(o.total_amount) as amount
